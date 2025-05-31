@@ -18,6 +18,3 @@ This repository accompanies the paper **"Reconciling Privacy and Explainability 
 5. **`LA-and-PIS.py`**  
    Performs analysis related to the **Localization Assumption (LA)** and calculates **PIS**, as described in Section 4 of the paper.
 
-
-> We directly leverage **[dp-pix](https://github.com/kkodoo/dp-pix)** for generating **Locally Differentially Private (LDP) Explanations**. We utilize the repository with our custom hyperparameters for privacy-preserving explanations, as discussed in Section 8, and we leverage the **scikit-image** library for calculating **Structural Similarity Index (SSIM)**,
-
