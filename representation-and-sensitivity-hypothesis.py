@@ -1,7 +1,7 @@
 import PyRKHSstats
 from PyRKHSstats.kernel_wrapper import KernelWrapper
 from PyRKHSstats.hsic import perform_gamma_approximation_hsic_independence_testing, perform_permutation_hsic_independence_testing
-from sklearn.metrics.pairwise import linear_kernel
+from sklearn.metrics.pairwise import linear_kernel, rbf_kernel
 import os
 import pandas as pd
 import torch
@@ -355,7 +355,7 @@ private_model.features[10].denselayer16.relu2
                 act_test_result_gamma = perform_gamma_approximation_hsic_independence_testing(
                                 data_x=act_base.cpu().numpy(),
                                 data_y=act_pvt.cpu().numpy(),
-                                kernel_kx=KernelWrapper(...), #we employed linear and RBF kernels
+                                kernel_kx=KernelWrapper(...), # We used both linear and RBF kernels, but observed occasional numerical overflows with scikit-learn. Custom implementations may help avoid this.
                                 kernel_ky=KernelWrapper(...),
                                 test_level=0.05  
                             )
@@ -363,7 +363,7 @@ private_model.features[10].denselayer16.relu2
                 attr_test_result_gamma = perform_gamma_approximation_hsic_independence_testing(
                                 data_x=attribution_base.cpu().numpy(),
                                 data_y=attribution_private.cpu().numpy(),
-                                kernel_kx=KernelWrapper(...), #we employed linear and RBF kernels
+                                kernel_kx=KernelWrapper(...), # We used both linear and RBF kernels, but observed occasional numerical overflows with scikit-learn. Custom implementations may help avoid this.
                                 kernel_ky=KernelWrapper(...),
                                 test_level=0.05  
                             )            
