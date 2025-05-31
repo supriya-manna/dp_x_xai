@@ -33,12 +33,16 @@ transform = transforms.Compose([
 ])
 
 test_dataset = datasets.CIFAR10(root="../cifar10", train=False, download=True, transform=transform)
+test_loader = DataLoader(test_dataset, batch_size=len(test_dataset), shuffle=False)
+images, labels = next(iter(test_loader))
+images = images.to(device)
+labels = labels.to(device)
 
 output_folder = 'results'
 os.makedirs(output_folder, exist_ok=True)
 
-base_model_paths = ["..."] #Saved non-private model with ".pth" extension for our case.
-private_model_paths = ["...", "..." ,"..."] #Set of saved private models, parameterized with epsilon & delta with ".pth" extension for our case.
+base_model_paths = ["..."] #Saved non-private model with ".pth" extension for our case. 
+private_model_paths = ["...", "...", "..."] #Set of saved private models, parameterized with epsilon & delta with ".pth" extension for our case.
 csv_filename = os.path.join(output_folder, 'grad-act-hypothesis.csv')
 csv_header = ['Model', 'Layer', 'act_Independence', 'grad_Independence']
 with open(csv_filename, 'w', newline='') as csvfile:
@@ -86,7 +90,7 @@ with open(csv_filename, 'w', newline='') as csvfile:
             common_images = images[common_mask]
             common_labels = base_labels[common_mask]
 
-    #activation layers for models. For resnet and efficinetNet, please access the activation layer ids from here: https://bit.ly/dp_x_xai
+    #activation layers for DenseNet-121 architecture. For ResNet-34 and EfficientNet, please access the activation layer IDs from here: https://bit.ly/dp_x_xai
             layer_paths = [
 base_model.features.relu0,
 base_model.features[4].denselayer1.relu1 ,
